@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:money_management/db/category/category_db.dart';
 
 import 'expense_category_list.dart';
 import 'income_category_list.dart';
@@ -11,6 +12,14 @@ class Category extends StatefulWidget {
 }
 
 class _CategoryState extends State<Category> {
+  @override
+  void initState() {
+    CategoryDb().getCategory().then((value) {
+      print('Category DB');
+      print(value.toString());
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
