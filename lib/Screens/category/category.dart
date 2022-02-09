@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:money_management/category/income_category_list.dart';
-import 'package:money_management/category/expense_category_list.dart';
+
+import 'expense_category_list.dart';
+import 'income_category_list.dart';
 
 class Category extends StatefulWidget {
   const Category({Key? key}) : super(key: key);

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:money_management/Home/home_screen.dart';
+
+import '../home_screen.dart';
 
 class BottomNavigator extends StatelessWidget {
   const BottomNavigator({Key? key}) : super(key: key);

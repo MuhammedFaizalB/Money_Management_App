@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:money_management/Home/widgets/bottom_navigator.dart';
-import 'package:money_management/category/category.dart';
-import 'package:money_management/transaction/transaction.dart';
+
+import 'package:money_management/Screens/category/category.dart';
+import 'package:money_management/Screens/transaction/transaction.dart';
+
+import 'widgets/bottom_navigator.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({Key? key}) : super(key: key);
