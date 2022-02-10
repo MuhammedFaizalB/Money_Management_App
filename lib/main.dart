@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:money_management/Screens/transaction/add_transaction.dart';
 import 'package:money_management/models/category/category_model.dart';
 
 import 'Screens/Home/home_screen.dart';
@@ -28,6 +29,11 @@ class MyApp extends StatelessWidget {
       themeMode: ThemeMode.system,
       title: 'Money Management',
       home: HomeScreen(),
+      routes: {
+        AddTransaction.routeName: (ctx) {
+          return const AddTransaction();
+        }
+      },
     );
   }
 }
