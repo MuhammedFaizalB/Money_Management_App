@@ -14,10 +14,7 @@ class Category extends StatefulWidget {
 class _CategoryState extends State<Category> {
   @override
   void initState() {
-    CategoryDb().getCategory().then((value) {
-      print('Category DB');
-      print(value.toString());
-    });
+    CategoryDb().refreshUI();
   }
 
   @override
