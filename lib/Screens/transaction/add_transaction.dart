@@ -16,6 +16,14 @@ class _AddTransactionState extends State<AddTransaction> {
   CategoryType? _selectedCategoryType;
   CategoryModel? _selectedCategoryModel;
 
+  String? _categoryID;
+
+  @override
+  void initState() {
+    _selectedCategoryType = CategoryType.income;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,6 +32,7 @@ class _AddTransactionState extends State<AddTransaction> {
         child: SafeArea(
           child: Column(
             children: [
+              //purpose
               TextFormField(
                 keyboardType: TextInputType.text,
                 decoration: const InputDecoration(
@@ -34,6 +43,7 @@ class _AddTransactionState extends State<AddTransaction> {
               const SizedBox(
                 height: 15,
               ),
+              //Amount
               TextFormField(
                 keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
@@ -41,6 +51,7 @@ class _AddTransactionState extends State<AddTransaction> {
                   hintText: 'Amount',
                 ),
               ),
+              //date and time
               TextButton.icon(
                 onPressed: () async {
                   final _selectedDateTemp = await showDatePicker(
@@ -64,32 +75,57 @@ class _AddTransactionState extends State<AddTransaction> {
                     ? 'Select Date'
                     : _selectedDate.toString()),
               ),
+              //category type
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Radio(
                     value: CategoryType.income,
-                    groupValue: CategoryType.income,
-                    onChanged: (newValue) {},
+                    groupValue: _selectedCategoryType,
+                    onChanged: (newValue) {
+                      setState(() {
+                        _selectedCategoryType = CategoryType.income;
+                        _categoryID = null;
+                      });
+                    },
                   ),
                   const Text('Income'),
                   Radio(
                     value: CategoryType.expense,
-                    groupValue: CategoryType.income,
-                    onChanged: (newValue) {},
+                    groupValue: _selectedCategoryType,
+                    onChanged: (newValue) {
+                      setState(() {
+                        _selectedCategoryType = CategoryType.expense;
+                        _categoryID = null;
+                      });
+                    },
                   ),
                   const Text('Expense')
                 ],
               ),
+              //select category
               DropdownButton(
                 hint: const Text('Select Category'),
-                items: CategoryDb.instance.expenseCategoryList.value.map((e) {
-                  return DropdownMenuItem(value: e.id, child: Text(e.name));
+                value: _categoryID,
+                //ternary Operator
+                items: (_selectedCategoryType == CategoryType.income
+                        ? CategoryDb().incomeCategoryList
+                        : CategoryDb().expenseCategoryList)
+                    .value
+                    .map((e) {
+                  return DropdownMenuItem(
+                    value: e.id,
+                    child: Text(e.name),
+                  );
                 }).toList(),
                 onChanged: (selectedvalue) {
                   print(selectedvalue);
+                  setState(() {
+                    _categoryID = selectedvalue as String?;
+                  });
                 },
               ),
+
               ElevatedButton.icon(
                   onPressed: () {},
                   icon: const Icon(Icons.add),
