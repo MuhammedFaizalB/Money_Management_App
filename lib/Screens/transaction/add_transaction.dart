@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:money_management/db/category/category_db.dart';
+import 'package:money_management/db/transaction/transaction_db.dart';
 import 'package:money_management/models/category/category_model.dart';
+import 'package:money_management/models/transaction/transaction_model.dart';
 
 class AddTransaction extends StatefulWidget {
   const AddTransaction({Key? key}) : super(key: key);
@@ -18,6 +20,9 @@ class _AddTransactionState extends State<AddTransaction> {
 
   String? _categoryID;
 
+  final _purposeTextEditingController = TextEditingController();
+  final _amountTextEditingController = TextEditingController();
+
   @override
   void initState() {
     _selectedCategoryType = CategoryType.income;
@@ -34,6 +39,7 @@ class _AddTransactionState extends State<AddTransaction> {
             children: [
               //purpose
               TextFormField(
+                controller: _purposeTextEditingController,
                 keyboardType: TextInputType.text,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
@@ -45,6 +51,7 @@ class _AddTransactionState extends State<AddTransaction> {
               ),
               //Amount
               TextFormField(
+                controller: _amountTextEditingController,
                 keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
@@ -116,6 +123,9 @@ class _AddTransactionState extends State<AddTransaction> {
                   return DropdownMenuItem(
                     value: e.id,
                     child: Text(e.name),
+                    onTap: () {
+                      _selectedCategoryModel = e;
+                    },
                   );
                 }).toList(),
                 onChanged: (selectedvalue) {
@@ -127,7 +137,9 @@ class _AddTransactionState extends State<AddTransaction> {
               ),
 
               ElevatedButton.icon(
-                  onPressed: () {},
+                  onPressed: () {
+                    addTransaction();
+                  },
                   icon: const Icon(Icons.add),
                   label: const Text(
                     'Add Transaction',
@@ -137,5 +149,40 @@ class _AddTransactionState extends State<AddTransaction> {
         ),
       ),
     );
+  }
+
+  Future<void> addTransaction() async {
+    final _purposeText = _purposeTextEditingController.text;
+    final _amountText = _amountTextEditingController.text;
+    if (_purposeText.isEmpty) {
+      return;
+    }
+    if (_amountText.isEmpty) {
+      return;
+    }
+    if (_categoryID == null) {
+      return;
+    }
+    if (_selectedDate == null) {
+      return;
+    }
+    if (_selectedCategoryModel == null) {
+      return;
+    }
+
+    final _parseAmount = double.tryParse(_amountText);
+
+    if (_parseAmount == null) {
+      return;
+    }
+
+    final _model = TransactionModel(
+      purpose: _purposeText,
+      amount: _parseAmount,
+      date: _selectedDate!,
+      type: _selectedCategoryType!,
+      category: _selectedCategoryModel!,
+    );
+    TransactionDB.instance.addTransaction(_model);
   }
 }
