@@ -4,13 +4,11 @@ import 'package:money_management/Screens/category/category.dart';
 import 'package:money_management/Screens/category/category_popup.dart';
 import 'package:money_management/Screens/transaction/add_transaction.dart';
 import 'package:money_management/Screens/transaction/transaction.dart';
-import 'package:money_management/db/category/category_db.dart';
-import 'package:money_management/models/category/category_model.dart';
 
 import 'widgets/bottom_navigator.dart';
 
 class HomeScreen extends StatelessWidget {
-  HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({Key? key}) : super(key: key);
 
   static ValueNotifier<int> selectedIndexNodifier = ValueNotifier(0);
 
@@ -22,12 +20,13 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[100],
+      backgroundColor: Colors.grey[400],
       appBar: AppBar(
-        title: Text('Money Manager'),
+        backgroundColor: Colors.grey[800],
+        title: const Text('Money Manager'),
         centerTitle: true,
       ),
-      bottomNavigationBar: BottomNavigator(),
+      bottomNavigationBar: const BottomNavigator(),
       body: SafeArea(
           child: ValueListenableBuilder(
         valueListenable: selectedIndexNodifier,
@@ -36,12 +35,11 @@ class HomeScreen extends StatelessWidget {
         },
       )),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.grey[800],
         onPressed: () {
           if (selectedIndexNodifier.value == 0) {
-            print('Add Transaction');
             Navigator.of(context).pushNamed(AddTransaction.routeName);
           } else {
-            print('Add Category');
             showCategoryAddedPopup(context);
             // final _sample = CategoryModel(
             //   id: DateTime.now().millisecondsSinceEpoch.toString(),
@@ -51,7 +49,7 @@ class HomeScreen extends StatelessWidget {
             // CategoryDb().insertCategory(_sample);
           }
         },
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
   }

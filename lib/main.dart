@@ -28,11 +28,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        primaryColor: Colors.blue[800],
+        primarySwatch: Colors.blue,
       ),
       themeMode: ThemeMode.system,
       title: 'Money Management',
-      home: HomeScreen(),
+      home: const HomeScreen(),
       routes: {
         AddTransaction.routeName: (ctx) {
           return const AddTransaction();

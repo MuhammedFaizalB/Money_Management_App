@@ -24,7 +24,7 @@ class _CategoryState extends State<Category> {
       child: Column(
         children: [
           TabBar(
-            labelColor: Colors.grey[700],
+            labelColor: Colors.black,
             tabs: const [
               Tab(
                 text: 'Income',

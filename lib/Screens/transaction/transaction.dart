@@ -23,7 +23,7 @@ class Transaction extends StatelessWidget {
               return Slidable(
                 key: Key(_value.id!),
                 startActionPane: ActionPane(
-                  motion: BehindMotion(),
+                  motion: const BehindMotion(),
                   children: [
                     SlidableAction(
                       onPressed: (ctx) {
